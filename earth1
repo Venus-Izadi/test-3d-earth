@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Earth Globe</title>
+  <style>
+    body { margin: 0; }
+    canvas { display: block; }
+  </style>
+</head>
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/three@0.155.0/build/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    document.body.appendChild(renderer.domElement);
+
+    // Create a sphere representing the Earth
+    const geometry = new THREE.SphereGeometry(5, 32, 32);
+    const texture = new THREE.TextureLoader().load('https://threejs.org/examples/textures/earth.jpg');
+    const material = new THREE.MeshBasicMaterial({ map: texture });
+    const globe = new THREE.Mesh(geometry, material);
+    scene.add(globe);
+
+    camera.position.z = 10;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      globe.rotation.y += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+  </script>
+</body>
+</html>
